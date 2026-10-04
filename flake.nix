@@ -3,6 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    nixpkgs-go120.url = "github:NixOS/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     git-hooks.url = "github:cachix/git-hooks.nix";
     git-hooks.inputs.nixpkgs.follows = "nixpkgs";
@@ -10,6 +12,7 @@
 
   outputs = {
     nixpkgs,
+    nixpkgs-go120,
     flake-utils,
     git-hooks,
     ...
@@ -17,6 +20,7 @@
     flake-utils.lib.eachDefaultSystem (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
+        pkgs-go120 = nixpkgs-go120.legacyPackages.${system};
 
         offlineHooks = {
           alejandra.enable = true;
@@ -47,27 +51,27 @@
 
           packages = with pkgs; [
             # Go
-            go_1_27
-            gopls
-            delve
-            gofumpt
-            goimports-reviser
-            govulncheck
-            golangci-lint
+            pkgs-go120.go_1_20
+            pkgs.gopls
+            pkgs.delve
+            pkgs.gofumpt
+            pkgs.goimports-reviser
+            pkgs.govulncheck
+            pkgs.golangci-lint
 
             # Frontend
-            nodejs
+            pkgs.nodejs
 
             # Git
-            git
+            pkgs.git
 
             # Nix
-            alejandra
-            statix
-            deadnix
+            pkgs.alejandra
+            pkgs.statix
+            pkgs.deadnix
 
             # YAML
-            yamllint
+            pkgs.yamllint
           ];
         };
       }
