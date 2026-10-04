@@ -28,13 +28,6 @@
           statix.enable = true;
 
           deadnix.enable = true;
-
-          yamllint = {
-            enable = true;
-            settings.configPath = "./.yamllint.yml";
-          };
-
-          golangci-lint.enable = true;
         };
 
         preCommit = git-hooks.lib.${system}.run {
@@ -57,7 +50,6 @@
             pkgs.gofumpt
             pkgs.goimports-reviser
             pkgs.govulncheck
-            pkgs.golangci-lint
 
             # Frontend
             pkgs.nodejs
@@ -69,9 +61,6 @@
             pkgs.alejandra
             pkgs.statix
             pkgs.deadnix
-
-            # YAML
-            pkgs.yamllint
           ];
         };
       }
