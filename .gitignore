@@ -1,3 +1,7 @@
 .direnv/
 
 .pre-commit-config.yaml
+
+app/routes/*
+app/tmp/*
+target/app/github*
